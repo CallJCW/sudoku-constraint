@@ -23,9 +23,13 @@ def extractpuzzle(puzzlestring):
   x = 0
   puzzle = []
   for i in puzzlestring:
-    if int(i) > 0:
-      puzzle.append((int(i), (str(int(x/9)) + ',' + str(x%9) ) ) )
+    if i.isdigit():
+      if int(i) > 0:
+        puzzle.append((int(i), (str(int(x/9)) + ',' + str(x%9) ) ) )
+    else:
+      raise SystemExit('character number ' + str(x)  + ' "' + i + '" is not a digit')
     x += 1
+    
   return (puzzle)
 
 def solve(puzzlestring):
@@ -60,11 +64,14 @@ def solve(puzzlestring):
     problem.addConstraint(ExactSumConstraint(x), [y])
   
   solution = problem.getSolution()
-
-  solvedpuzzlestring = ''
-  for row in rows:
-    for column in cols:
-        solvedpuzzlestring += str(solution[grid[row][column]])
+  
+  if solution:
+    solvedpuzzlestring = ''
+    for row in rows:
+      for column in cols:
+          solvedpuzzlestring += str(solution[grid[row][column]])
+  else:
+    raise SystemExit('puzzlestring does not describe a valid sudoku puzzle: ' + puzzlestring)
 
   return (solvedpuzzlestring)
 
@@ -77,19 +84,27 @@ def main():
   
   if args.puzzlestring:
     if len(args.puzzlestring) != 81:
-      print('puzzlestring not valid length', args.puzzlestring)
+      #print('puzzlestring not valid length', args.puzzlestring)
+      raise SystemExit('puzzlestring not valid length: ' + str(len(args.puzzlestring) ) + ' ' + args.puzzlestring)
     else:
       print(prettysudoku(solve(args.puzzlestring)))
   if args.filename:
     if not os.path.isfile(args.filename):
-      print('File does not exist')
+      #print('File does not exist')
+      raise SystemExit('File does not exist')
     else:
-      for line in open(args.filename, 'r').readlines():
-        line = line.strip()
-        if len(line) != 81:
-          print('puzzlestring not valid length', str(len(line) ), line)
-        else:
-          print(prettysudoku(solve(line)))
+      with open(args.filename, 'r') as file:
+        linenumber = 1
+        for line in file.readlines():
+          line = line.strip()
+          if len(line) != 81:
+            #print('puzzlestring not valid length', str(len(line) ), line)
+            raise SystemExit('Line: ' + str(linenumber) + ' puzzlestring not valid length: ' + str(len(line) ) + ' ' + line)
+          else:
+            print('Puzzle #' + str(linenumber))
+            print(solve(line))
+            print(prettysudoku(solve(line)))
+          linenumber += 1
   
 if __name__ == '__main__':
    main()
