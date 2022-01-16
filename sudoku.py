@@ -22,14 +22,17 @@ def prettysudoku(puzzlestring):
 def extractpuzzle(puzzlestring):
   x = 0
   puzzle = []
-  for i in puzzlestring:
-    if i.isdigit():
-      if int(i) > 0:
-        puzzle.append((int(i), (str(int(x/9)) + ',' + str(x%9) ) ) )
-    else:
-      raise SystemExit('character number ' + str(x)  + ' "' + i + '" is not a digit')
-    x += 1
-    
+  if len(puzzlestring) != 81:
+    raise SystemExit('Exception in extractpuzzle(puzzlestring): puzzlestring not valid length: ' + str(len(puzzlestring) ) + ' ' + puzzlestring)
+  else:
+    for i in puzzlestring:
+      if i.isdigit():
+        if int(i) > 0:
+          puzzle.append((int(i), (str(int(x/9)) + ',' + str(x%9) ) ) )
+      else:
+        raise SystemExit('Exception in extractpuzzle(puzzlestring): character number ' + str(x)  + ' "' + i + '" is not a digit ' + puzzlestring)
+      x += 1
+      
   return (puzzle)
 
 def solve(puzzlestring):
