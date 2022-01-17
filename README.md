@@ -26,3 +26,18 @@ produces output of
 | 8 9 7 | 2 6 1 | 3 5 4 |
 + - - - + - - - + - - - +
 ```
+
+```
+python3 sudoku.py --help
+usage: sudoku.py [-h] [-p PUZZLESTRING] [-f FILENAME]
+
+Find Sudoku puzzle solution
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -p PUZZLESTRING, --puzzle PUZZLESTRING
+                        81 digit puzzle string
+  -f FILENAME, --file FILENAME
+                        a text file containing 1 or more 81 digit puzzle strings, separated by line
+                        breaks
+```
