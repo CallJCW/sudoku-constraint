@@ -82,7 +82,7 @@ def main():
   parser = argparse.ArgumentParser(description='Find Sudoku puzzle solution')
   #add mutually exclusive group (https://docs.python.org/3/library/argparse.html#mutual-exclusion)
   parser.add_argument('-p', '--puzzle', dest='puzzlestring', help='81 digit puzzle string')
-  parser.add_argument('-i', '--input-file', dest='filename', help='a text file containing 1 or more 81 digit puzzle strings, separated by line breaks')
+  parser.add_argument('-f', '--file', dest='filename', help='a text file containing 1 or more 81 digit puzzle strings, separated by line breaks')
   args = parser.parse_args()
   
   if args.puzzlestring:
